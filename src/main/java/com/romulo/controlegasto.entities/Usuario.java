@@ -86,7 +86,7 @@ public class Usuario {
         return Objects.hash(id);
     }
 
-    // Getters e Setters, equals, hashCode
+
 }
 
 
