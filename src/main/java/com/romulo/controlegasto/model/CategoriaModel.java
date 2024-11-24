@@ -1,35 +1,36 @@
-package com.romulo.controlegasto.entities;
+package com.romulo.controlegasto.model;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_categoria")
-public class Categoria {
+public class CategoriaModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @Column(nullable = false)
     private String nome;
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Gastos> gastos = new ArrayList<>();
+    private List<GastosModel> gastos = new ArrayList<>();
 
-    public Categoria() {
+    public CategoriaModel() {
     }
 
-    public Categoria(String nome) {
+    public CategoriaModel(String nome) {
         this.nome = nome;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -41,22 +42,22 @@ public class Categoria {
         this.nome = nome;
     }
 
-    public List<Gastos> getGastos() {
+    public List<GastosModel> getGastos() {
         return gastos;
     }
 
-    public void setGastos(List<Gastos> gastos) {
+    public void setGastos(List<GastosModel> gastos) {
         this.gastos = gastos;
     }
 
     // Método para adicionar um Gasto à Categoria
-    public void addGasto(Gastos gasto) {
+    public void addGasto(GastosModel gasto) {
         gastos.add(gasto);
         gasto.setCategoria(this); // Atualiza o campo categoria em Gastos
     }
 
     // Método para remover um Gasto da Categoria
-    public void removeGasto(Gastos gasto) {
+    public void removeGasto(GastosModel gasto) {
         gastos.remove(gasto);
         gasto.setCategoria(null); // Remove a referência da categoria em Gastos
     }
@@ -65,8 +66,8 @@ public class Categoria {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Categoria categoria = (Categoria) o;
-        return id.equals(categoria.id);
+        CategoriaModel categoriaModel = (CategoriaModel) o;
+        return id.equals(categoriaModel.id);
     }
 
     @Override

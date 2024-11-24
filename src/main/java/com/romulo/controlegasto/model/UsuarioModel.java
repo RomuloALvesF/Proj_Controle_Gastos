@@ -1,16 +1,17 @@
-package com.romulo.controlegasto.entities;
+package com.romulo.controlegasto.model;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_usuario")
-public class Usuario {
+public class UsuarioModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @Column(nullable = false)
     private String nome;
@@ -22,22 +23,22 @@ public class Usuario {
     private String password;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Contas> contas = new ArrayList<>();
+    private List<ContasModel> contas = new ArrayList<>();
 
-    public Usuario() {
+    public UsuarioModel() {
     }
 
-    public Usuario(String nome, String email, String password) {
+    public UsuarioModel(String nome, String email, String password) {
         this.nome = nome;
         this.email = email;
         this.password = password;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -65,11 +66,11 @@ public class Usuario {
         this.password = password;
     }
 
-    public List<Contas> getContas() {
+    public List<ContasModel> getContas() {
         return contas;
     }
 
-    public void setContas(List<Contas> contas) {
+    public void setContas(List<ContasModel> contas) {
         this.contas = contas;
     }
 
@@ -77,8 +78,8 @@ public class Usuario {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Usuario usuario = (Usuario) o;
-        return Objects.equals(id, usuario.id);
+        UsuarioModel usuarioModel = (UsuarioModel) o;
+        return Objects.equals(id, usuarioModel.id);
     }
 
     @Override

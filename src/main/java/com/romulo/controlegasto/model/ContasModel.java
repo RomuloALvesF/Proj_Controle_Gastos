@@ -1,16 +1,17 @@
-package com.romulo.controlegasto.entities;
+package com.romulo.controlegasto.model;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_contas")
-public class Contas {
+public class ContasModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @Column(nullable = false)
     private String nome;
@@ -20,25 +21,25 @@ public class Contas {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    private UsuarioModel usuarioModel;
 
     @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Gastos> gastos = new ArrayList<>();
+    private List<GastosModel> gastos = new ArrayList<>();
 
-    public Contas() {
+    public ContasModel() {
     }
 
-    public Contas(String nome, Double balanco, Usuario usuario) {
+    public ContasModel(String nome, Double balanco, UsuarioModel usuarioModel) {
         this.nome = nome;
         this.balanco = balanco;
-        this.usuario = usuario;
+        this.usuarioModel = usuarioModel;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -58,30 +59,30 @@ public class Contas {
         this.balanco = balanco;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public UsuarioModel getUsuario() {
+        return usuarioModel;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(UsuarioModel usuarioModel) {
+        this.usuarioModel = usuarioModel;
     }
 
-    public List<Gastos> getGastos() {
+    public List<GastosModel> getGastos() {
         return gastos;
     }
 
-    public void setGastos(List<Gastos> gastos) {
+    public void setGastos(List<GastosModel> gastos) {
         this.gastos = gastos;
     }
 
     // Método para adicionar um Gasto à Conta
-    public void addGasto(Gastos gasto) {
+    public void addGasto(GastosModel gasto) {
         gastos.add(gasto);
         gasto.setConta(this); // Atualiza o campo conta em Gastos
     }
 
     // Método para remover um Gasto da Conta
-    public void removeGasto(Gastos gasto) {
+    public void removeGasto(GastosModel gasto) {
         gastos.remove(gasto);
         gasto.setConta(null); // Remove a referência da conta em Gastos
     }
@@ -90,8 +91,8 @@ public class Contas {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Contas contas = (Contas) o;
-        return id.equals(contas.id);
+        ContasModel contasModel = (ContasModel) o;
+        return id.equals(contasModel.id);
     }
 
     @Override

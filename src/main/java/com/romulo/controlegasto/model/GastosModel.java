@@ -1,15 +1,16 @@
-package com.romulo.controlegasto.entities;
+package com.romulo.controlegasto.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_gastos")
-public class Gastos {
+public class GastosModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @Column(nullable = false)
     private String descricao;
@@ -22,28 +23,28 @@ public class Gastos {
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
-    private Categoria categoria;
+    private CategoriaModel categoria;
 
     @ManyToOne
     @JoinColumn(name = "conta_id", nullable = false)
-    private Contas conta;
+    private ContasModel conta;
 
-    public Gastos() {
+    public GastosModel() {
     }
 
-    public Gastos(String descricao, Double preco, LocalDate data, Categoria categoria, Contas conta) {
+    public GastosModel(String descricao, Double preco, LocalDate data, CategoriaModel categoriaModel, ContasModel conta) {
         this.descricao = descricao;
         this.preco = preco;
         this.data = data;
-        this.categoria = categoria;
+        this.categoria = categoriaModel;
         this.conta = conta;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -71,19 +72,19 @@ public class Gastos {
         this.data = data;
     }
 
-    public Categoria getCategoria() {
+    public CategoriaModel getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategoria(CategoriaModel categoriaModel) {
+        this.categoria = categoriaModel;
     }
 
-    public Contas getConta() {
+    public ContasModel getConta() {
         return conta;
     }
 
-    public void setConta(Contas conta) {
+    public void setConta(ContasModel conta) {
         this.conta = conta;
     }
 
@@ -91,7 +92,7 @@ public class Gastos {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Gastos gastos = (Gastos) o;
+        GastosModel gastos = (GastosModel) o;
         return id.equals(gastos.id);
     }
 
@@ -100,7 +101,6 @@ public class Gastos {
         return Objects.hash(id);
     }
 
-    // Getters e Setters, equals, hashCode
 }
 
 
