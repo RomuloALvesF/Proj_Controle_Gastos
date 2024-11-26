@@ -21,7 +21,7 @@ public class ContasModel {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
-    private UsuarioModel usuarioModel;
+    private UsuarioModel usuario;
 
     @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GastosModel> gastos = new ArrayList<>();
@@ -32,7 +32,7 @@ public class ContasModel {
     public ContasModel(String nome, Double balanco, UsuarioModel usuarioModel) {
         this.nome = nome;
         this.balanco = balanco;
-        this.usuarioModel = usuarioModel;
+        this.usuario = usuarioModel;
     }
 
     public UUID getId() {
@@ -60,11 +60,11 @@ public class ContasModel {
     }
 
     public UsuarioModel getUsuario() {
-        return usuarioModel;
+        return usuario;
     }
 
     public void setUsuario(UsuarioModel usuarioModel) {
-        this.usuarioModel = usuarioModel;
+        this.usuario = usuarioModel;
     }
 
     public List<GastosModel> getGastos() {

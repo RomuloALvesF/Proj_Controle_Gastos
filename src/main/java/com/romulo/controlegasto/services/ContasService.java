@@ -26,7 +26,7 @@ public class ContasService {
     }
 
     public List<ContasModel> findByUsuarioId(UUID usuarioId) {
-        return contasRepository.findByUsuarioModelId(usuarioId);
+        return contasRepository.findByUsuario_Id(usuarioId);
     }
 
     public ContasModel save(ContasModel conta) {

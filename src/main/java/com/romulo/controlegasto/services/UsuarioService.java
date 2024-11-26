@@ -2,6 +2,7 @@ package com.romulo.controlegasto.services;
 
 import com.romulo.controlegasto.model.UsuarioModel;
 import com.romulo.controlegasto.repositories.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.UUID;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+
 
     public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;

@@ -8,5 +8,6 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface ContasRepository extends JpaRepository<ContasModel, UUID> {
-    List<ContasModel> findByUsuarioModelId(UUID usuarioId);
+    List<ContasModel> findByUsuario_Id(UUID id);
+
 }
