@@ -23,7 +23,7 @@ public class GastosDTO {
         this.contaId = contaId;
     }
 
-    // Getters e Setters
+
     public UUID getId() {
         return id;
     }

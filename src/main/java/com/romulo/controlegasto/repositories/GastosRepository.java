@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface GastosRepository extends JpaRepository<GastosModel, UUID> {
+    //List<GastosModel>: Utilizado quando se espera múltiplos resultados.
     List<GastosModel> findByContaId(UUID contaId);
     List<GastosModel> findByCategoriaId(UUID categoriaId);
     List<GastosModel> findByDataBetween(LocalDate startDate, LocalDate endDate);

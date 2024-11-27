@@ -1,28 +1,56 @@
 package com.romulo.controlegasto.converter;
+
 import com.romulo.controlegasto.dto.*;
 import com.romulo.controlegasto.model.*;
 
 public class Converter {
-    //BeanUtils.copyProperties() poderia ser usada também, mas para fins didaticos realizei manual
-    // Usuario
-    public static UsuarioDTO toUsuarioDTO(UsuarioModel usuario) {
-        return new UsuarioDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getPassword());
+
+
+    // Métodos d Usuario
+
+
+    // Converte UsuarioRequestDTO para UsuarioModel
+    public static UsuarioModel toUsuarioModel(UsuarioRequestDTO usuarioRequestDTO) {
+        return new UsuarioModel(
+                usuarioRequestDTO.getNome(),
+                usuarioRequestDTO.getEmail(),
+                usuarioRequestDTO.getPassword()
+        );
     }
 
-    public static UsuarioModel toUsuarioModel(UsuarioDTO usuarioDTO) {
-        return new UsuarioModel(usuarioDTO.getNome(), usuarioDTO.getEmail(), usuarioDTO.getPassword());
+    // Converte UsuarioModel para UsuarioResponseDTO
+    public static UsuarioResponseDTO toUsuarioResponseDTO(UsuarioModel usuarioModel) {
+        return new UsuarioResponseDTO(
+                usuarioModel.getId(),
+                usuarioModel.getNome(),
+                usuarioModel.getEmail()
+        );
     }
 
-    // Contas
+
+    // Métodos de Contas
+
+
     public static ContasDTO toContasDTO(ContasModel conta) {
-        return new ContasDTO(conta.getId(), conta.getNome(), conta.getBalanco(), conta.getUsuario().getId());
+        return new ContasDTO(
+                conta.getId(),
+                conta.getNome(),
+                conta.getBalanco(),
+                conta.getUsuario().getId()
+        );
     }
 
     public static ContasModel toContasModel(ContasDTO contaDTO, UsuarioModel usuario) {
-        return new ContasModel(contaDTO.getNome(), contaDTO.getBalanco(), usuario);
+        return new ContasModel(
+                contaDTO.getNome(),
+                contaDTO.getBalanco(),
+                usuario
+        );
     }
 
-    // Gastos
+
+    // Métodos de Gastos
+
     public static GastosDTO toGastosDTO(GastosModel gasto) {
         return new GastosDTO(
                 gasto.getId(),
@@ -44,13 +72,22 @@ public class Converter {
         );
     }
 
-    // Categoria
+
+    // Métodos de Categoria
+
+
     public static CategoriaDTO toCategoriaDTO(CategoriaModel categoria) {
-        return new CategoriaDTO(categoria.getId(), categoria.getNome());
+        return new CategoriaDTO(
+                categoria.getId(),
+                categoria.getNome()
+        );
     }
 
     public static CategoriaModel toCategoriaModel(CategoriaDTO categoriaDTO) {
-        return new CategoriaModel(categoriaDTO.getNome());
+        return new CategoriaModel(
+                categoriaDTO.getNome()
+        );
     }
 }
+
 

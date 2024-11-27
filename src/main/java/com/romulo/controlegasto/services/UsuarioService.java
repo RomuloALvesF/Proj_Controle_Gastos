@@ -15,7 +15,7 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
-
+    // Construtor para injeção de dependência
     public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }

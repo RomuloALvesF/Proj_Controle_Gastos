@@ -1,8 +1,8 @@
 package com.romulo.controlegasto.controller;
 
-import com.romulo.controlegasto.dto.UsuarioDTO;
+import com.romulo.controlegasto.dto.UsuarioRequestDTO;
+import com.romulo.controlegasto.dto.UsuarioResponseDTO;
 import com.romulo.controlegasto.model.UsuarioModel;
-
 import com.romulo.controlegasto.converter.Converter;
 import com.romulo.controlegasto.services.UsuarioService;
 import jakarta.validation.Valid;
@@ -23,30 +23,33 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
+    // Retornar todos os usuários (Saída -> ResponseDTO)
     @GetMapping
-    public ResponseEntity<List<UsuarioDTO>> findAll() {
-        List<UsuarioDTO> usuarios = usuarioService.findAll()
+    public ResponseEntity<List<UsuarioResponseDTO>> findAll() {
+        List<UsuarioResponseDTO> usuarios = usuarioService.findAll()
                 .stream()
-                .map(Converter::toUsuarioDTO)
+                .map(Converter::toUsuarioResponseDTO) // Converte para o DTO de saída
                 .collect(Collectors.toList());
         return ResponseEntity.ok(usuarios);
     }
 
+    // Buscar um usuário por ID (Saída -> ResponseDTO)
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> findById(@PathVariable UUID id) {
+    public ResponseEntity<UsuarioResponseDTO> findById(@PathVariable UUID id) {
         return usuarioService.findById(id)
-                .map(Converter::toUsuarioDTO)
+                .map(Converter::toUsuarioResponseDTO) // Converte para o DTO de saída
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // Criar um novo usuário (Entrada -> RequestDTO, Saída -> ResponseDTO)
     @PostMapping
-    public ResponseEntity<UsuarioDTO> create(@Valid @RequestBody UsuarioDTO usuarioDTO) {
-        UsuarioModel usuario = usuarioService.save(Converter.toUsuarioModel(usuarioDTO));
-        return ResponseEntity.ok(Converter.toUsuarioDTO(usuario));
+    public ResponseEntity<UsuarioResponseDTO> create(@Valid @RequestBody UsuarioRequestDTO usuarioRequestDTO) {
+        UsuarioModel usuarioModel = usuarioService.save(Converter.toUsuarioModel(usuarioRequestDTO)); // Converte entrada para model
+        return ResponseEntity.ok(Converter.toUsuarioResponseDTO(usuarioModel)); // Converte model para saída
     }
 
-
+    // Excluir um usuário por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         if (usuarioService.findById(id).isPresent()) {
@@ -54,5 +57,14 @@ public class UsuarioController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    // Buscar usuário por email (Saída -> ResponseDTO)
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UsuarioResponseDTO> findByEmail(@PathVariable String email) {
+        return usuarioService.findByEmail(email)
+                .map(Converter::toUsuarioResponseDTO) // Converte para o DTO de saída
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
